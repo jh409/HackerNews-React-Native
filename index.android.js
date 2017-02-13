@@ -1,15 +1,6 @@
 'use strict';
-
-var React = require('react-native');
-
-var {
-  AppRegistry,
-  StyleSheet,
-  Navigator,
-  View,
-  WebView,
-  BackAndroid
-} = React;
+import React from 'react';
+import { StyleSheet, AppRegistry, View, Navigator, WebView, BackAndroid } from 'react-native';
 
 var _navigator;
 

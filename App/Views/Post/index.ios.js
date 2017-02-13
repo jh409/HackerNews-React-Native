@@ -1,14 +1,7 @@
 'use strict';
 
-var React = require('react-native');
-
-var {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-  WebView
-} = React;
+import React from 'react';
+import { StyleSheet, Text, View, TouchableHighlight, WebView } from 'react-native';
 
 var api = require("../../Network/api.js");
 
@@ -29,14 +22,14 @@ module.exports = React.createClass({
   render: function(){
     return(
         <RefreshableListView renderRow={(row)=>this.renderListViewRow(row)}
-        					           renderHeader={this.renderListViewHeader}
+                             renderHeader={this.renderListViewHeader}
                              onRefresh={(page, callback)=>this.listViewOnRefresh(page, callback)}
                              backgroundColor={'#F6F6EF'}
                              loadMoreText={'Load More...'}/>
     );
   },
   renderListViewRow: function(row){
-  	if(row.count==this.props.post.kids.length){
+    if(row.count==this.props.post.kids.length){
       return(
         <View style={{paddingBottom: 20}}>
           <Comment data={row}/>
@@ -44,25 +37,25 @@ module.exports = React.createClass({
       );
     }
     return(
-  		<Comment data={row}/>
-  	);
+      <Comment data={row}/>
+    );
   },
   renderListViewHeader: function(){
-  	return(
-		<View style={styles.headerContainer}>
-			<Text style={styles.headerTitle}>
-				{this.props.post.title}
-			</Text>
+    return(
+    <View style={styles.headerContainer}>
+      <Text style={styles.headerTitle}>
+        {this.props.post.title}
+      </Text>
       {this.renderPostText()}
       {this.renderSourceButton()}
-			<Text style={styles.headerPostDetailsLine}>
-				Posted by {this.props.post.by} | {this.props.post.score} Points
-			</Text>
-			<View style={styles.separator}/>
-			<Text style={styles.headerCommentTitle}>
-				{this.props.post.descendants} Comments:
-			</Text>
-		</View>
+      <Text style={styles.headerPostDetailsLine}>
+        Posted by {this.props.post.by} | {this.props.post.score} Points
+      </Text>
+      <View style={styles.separator}/>
+      <Text style={styles.headerCommentTitle}>
+        {this.props.post.descendants} Comments:
+      </Text>
+    </View>
     );
   },
   renderPostText: function(){
@@ -96,7 +89,7 @@ module.exports = React.createClass({
       this.fetchCommentsUsingKids(this.props.post.kids, this.state.lastIndex, 3, callback);
     }
     else{
-  	 this.fetchCommentsUsingKids(this.props.post.kids, 0, 3, callback);
+     this.fetchCommentsUsingKids(this.props.post.kids, 0, 3, callback);
     }
   },
   fetchCommentsUsingKids: function(kids, startIndex, amountToAdd, callback){
@@ -125,10 +118,10 @@ module.exports = React.createClass({
     this.setState({lastIndex: endIndex});
   },
   pushSourceWebpage: function(){
-  	this.props.navigator.push({
-  		title: this.props.post.title,
-  		passProps: {url: this.props.post.url},
-  		component: Web
+    this.props.navigator.push({
+      title: this.props.post.title,
+      passProps: {url: this.props.post.url},
+      component: Web
     });
   },
   fixPostText: function(str){

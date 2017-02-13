@@ -6,10 +6,11 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "react-native": "^0.20.0",
-    "react-native-gifted-listview": "0.0.12",
-    "react-native-scrollable-tab-view": "^0.3.8",
-    "react-native-vector-icons": "^1.2.1",
-    "react-native-activity-view": "^0.2.5"
+    "react": "^15.4.2",
+    "react-native": "^0.41.2",
+    "react-native-activity-view": "git+https://github.com/jh409/react-native-activity-view.git",
+    "react-native-gifted-listview": "git+https://github.com/FaridSafi/react-native-gifted-listview.git",
+    "react-native-scrollable-tab-view": "^0.7.2",
+    "react-native-vector-icons": "^4.0.0"
   }
 }

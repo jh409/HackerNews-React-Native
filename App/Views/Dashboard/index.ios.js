@@ -1,13 +1,7 @@
 'use strict';
 
-var React = require('react-native');
-
-var {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight
-} = React;
+import React from 'react';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
 var api = require("../../Network/api.js");
 
@@ -148,7 +142,7 @@ module.exports = React.createClass({
       rightButtonTitle: 'Share',
       onRightButtonPress: () => {
         ActivityView.show({
-          text: row.title, 
+          text: row.title,
           url: row.url
         });
       },
@@ -191,5 +185,5 @@ var styles = StyleSheet.create({
     separator: {
         height: 1,
         backgroundColor: '#CCCCCC'
-    } 
+    }
 });
