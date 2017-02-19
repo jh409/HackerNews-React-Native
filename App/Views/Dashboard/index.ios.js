@@ -23,7 +23,19 @@ export default class Dashboard extends React.Component {
 
   render() {
     return (
-      <View/> // Nothing to see
-    )
+      <TabBar structure={[
+        {
+          title: 'Front Page',
+          iconName: 'star',
+          renderContent: () => {
+            return (
+            <View /> // This needs to do something
+            );
+          }
+        }]}
+        selectedTab={2}
+        activeTintColor={'#ff8533'}
+        iconSize={25}/>
+    );
   }
-};
+}
