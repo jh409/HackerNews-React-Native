@@ -64,8 +64,20 @@ export default class TabBar extends React.Component {
           );
         }
         return(
-          <TabBarIOS>
-              
+          <TabBarIOS
+            tintColor={this.state.activeTintColor}
+            translucent={true}>
+            {this.state.structure.map((tabProps, tabIndex) =>
+              <Icon.TabBarItem
+                title={tabProps.title}
+                iconName={tabProps.iconName}
+                iconSize={this.state.iconSize}
+                selected={tabIndex == this.state.selectedTab}
+                onPress={() => {this.setState({selectedTab: tabIndex});}}
+                key={tabIndex}>
+                {tabProps.renderContent()}
+              </Icon.TabBarItem>
+            )}
           </TabBarIOS>
         );
     }
