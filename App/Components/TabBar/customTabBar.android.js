@@ -1,10 +1,9 @@
 'use strict';
+import React from 'react'
+import {StyleSheet, Text, View, TouchableOpacity, Animated, StatusBar} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Animated, StatusBar } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
-
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   tab: {
     flex: 1,
     alignItems: 'center',
@@ -37,15 +36,13 @@ var styles = StyleSheet.create({
   }
 });
 
-var CustomTabBar = React.createClass({
-  selectedTabIcons: [],
-  unselectedTabIcons: [],
+export default class CustomTabBar extends React.Component{
 
-  propTypes: {
-    goToPage: React.PropTypes.func,
-    activeTab: React.PropTypes.number,
-    tabs: React.PropTypes.array
-  },
+  constructor(props) {
+    super(props);
+    this.selectedTabIcons = [];
+    this.unselectedTabIcons = [];
+  }
 
   renderTabOption(valsString, page) {
     var vals = valsString.split('!$#');
@@ -60,12 +57,12 @@ var CustomTabBar = React.createClass({
         </Text>
       </TouchableOpacity>
     );
-  },
+  }
 
   componentDidMount() {
     this.setAnimationValue({value: this.props.activeTab});
-    this._listener = this.props.scrollValue.addListener(this.setAnimationValue);
-  },
+    this._listener = this.props.scrollValue.addListener(this.setAnimationValue.bind(this));
+  }
 
   setAnimationValue({value}) {
     var currentPage = this.props.activeTab;
@@ -84,7 +81,7 @@ var CustomTabBar = React.createClass({
         iconRef.setNativeProps({opacity: i - value});
       }
     });
-  },
+  }
 
   render() {
     var containerWidth = this.props.containerWidth;
@@ -111,7 +108,10 @@ var CustomTabBar = React.createClass({
         <Animated.View style={[tabUnderlineStyle, {left}]} />
       </View>
     );
-  },
-});
-
-module.exports = CustomTabBar;
+  }
+}
+CustomTabBar.propTypes = {
+  goToPage: React.PropTypes.func,
+  activeTab: React.PropTypes.number,
+  tabs: React.PropTypes.array
+};
