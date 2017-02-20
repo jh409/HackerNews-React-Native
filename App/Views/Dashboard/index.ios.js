@@ -81,7 +81,8 @@ export default class Dashboard extends React.Component {
   renderListViewRow(row, pushNavBarTitle) {
    return (
      <TouchableHighlight
-       underlayColor={'#f3f3f2'}>
+       underlayColor={'#f3f3f2'}
+       onPress={() => this.selectRow(row, pushNavBarTitle) }>
        <View style={styles.rowContainer}>
          <Text style={styles.rowCount}>
            {row.count}
@@ -99,7 +100,61 @@ export default class Dashboard extends React.Component {
      </TouchableHighlight>
    );
   }
-}
+
+ listViewOnRefresh(page, callback, api_endpoint) {
+    if (page != 1 && this.state.topStoryIDs) {
+      this.fetchStoriesUsingTopStoryIDs(this.state.topStoryIDs, this.state.lastIndex, 5, callback);
+    }
+    else {
+      let obj = this;
+      fetch(api_endpoint)
+        .then((response) => response.json())
+        .then((topStoryIDs) => {
+          obj.fetchStoriesUsingTopStoryIDs(topStoryIDs, 0, 12, callback);
+          obj.setState({ topStoryIDs: topStoryIDs });
+        })
+        .done();
+    }
+  }
+  fetchStoriesUsingTopStoryIDs(topStoryIDs, startIndex, amountToAdd, callback) {
+    var rowsData = [];
+    var endIndex = (startIndex + amountToAdd) < topStoryIDs.length ? (startIndex + amountToAdd) : topStoryIDs.length;
+    function iterateAndFetch() {
+      if (startIndex < endIndex) {
+        fetch(api.HN_ITEM_ENDPOINT + topStoryIDs[startIndex] + ".json")
+          .then((response) => response.json())
+          .then((topStory) => {
+            topStory.count = startIndex + 1;
+            rowsData.push(topStory);
+            startIndex++;
+            iterateAndFetch();
+          })
+          .done();
+      }
+      else {
+        callback(rowsData);
+        return;
+      }
+    }
+    iterateAndFetch();
+    this.setState({ lastIndex: endIndex });
+  }
+  selectRow(row, pushNavBarTitle) {
+    this.props.navigator.push({
+      title: pushNavBarTitle + ' #' + row.count,
+      component: Post,
+      passProps: { post: row },
+      backButtonTitle: 'Back',
+      rightButtonTitle: 'Share',
+      onRightButtonPress: () => {
+        ActivityView.show({
+          text: row.title,
+          url: row.url
+        });
+      },
+    });
+  }
+ }
 
 const styles = StyleSheet.create({
  rowContainer: {
