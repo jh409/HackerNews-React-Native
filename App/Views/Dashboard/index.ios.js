@@ -48,7 +48,7 @@ export default class Dashboard extends React.Component {
           renderContent: () => {
             return (
               <RefreshableListView renderRow={(row) => this.renderListViewRow(row, 'Top Story') }
-                onRefresh={(page, callback) => console.log("Do nothing yet") }
+                onRefresh={(page, callback) => this.listViewOnRefresh(page, callback, api.HN_TOP_STORIES_ENDPOINT) }
                 backgroundColor={'#F6F6EF'}
                 style={styles.listview}/>
              );
